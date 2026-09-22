@@ -32,15 +32,31 @@ function Contact() {
       )
       const result = await res.json()
       if (res.ok && result.success) {
-        setStatus('✅ Message parh gaya! Aapke inbox mein aa gaya. Reply jald mil jayega.')
+        setStatus('✅ Message parh gaya! Aapke email par aa gaya. Reply jald mil jayega.')
         event.currentTarget.reset()
-      } else {
-        setStatus(
-          '⚠️ Pehli baar activation chahiye — Gmail inbox mein FormSubmit ka email par gaye, us mein Activate par click karein, phir dobara submit karein.',
-        )
+        return
       }
+      const fallbackUrl = gmailCompose(
+        profile.email,
+        payload._subject,
+        `${payload.message}\n\n— ${payload.name} (${payload.email})`,
+      )
+      const win = window.open(fallbackUrl, '_blank', 'noopener,noreferrer')
+      if (!win) window.location.href = fallbackUrl
+      setStatus(
+        '⚠️ Form abhi activate nahi hua, is liye Gmail khul gaya hai — bas Send dabayen message mil jayega. (Gmail mein FormSubmit ka Activate email click karne ke baad form direct kaam karega.)',
+      )
     } catch {
-      setStatus('❌ FormSubmit reach nahi hua. Internet check karein.')
+      const fallbackUrl = gmailCompose(
+        profile.email,
+        payload._subject,
+        `${payload.message}\n\n— ${payload.name} (${payload.email})`,
+      )
+      const win = window.open(fallbackUrl, '_blank', 'noopener,noreferrer')
+      if (!win) window.location.href = fallbackUrl
+      setStatus(
+        '❌ FormSubmit reach nahi hua — Gmail compose khula hai, message Send karein.',
+      )
     } finally {
       setSending(false)
     }
