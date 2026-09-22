@@ -4,5 +4,5 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/kashfa-portfolio/',
+  base: '/kashfa-portfolio-react/',
 })
