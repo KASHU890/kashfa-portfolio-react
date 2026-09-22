@@ -1,3 +1,10 @@
+export function gmailCompose(to, subject = '', body = '') {
+  const params = new URLSearchParams({ view: 'cm', fs: '1', to })
+  if (subject) params.set('su', subject)
+  if (body) params.set('body', body)
+  return `https://mail.google.com/mail/?${params}`
+}
+
 export const profile = {
   name: 'Kashfa Ahsaan',
   initials: 'KA',
@@ -22,7 +29,7 @@ export const profile = {
     {
       label: 'Email',
       handle: 'kashfa.ahsaan@gmail.com',
-      url: 'mailto:kashfa.ahsaan@gmail.com',
+      url: gmailCompose('kashfa.ahsaan@gmail.com'),
     },
   ],
 }

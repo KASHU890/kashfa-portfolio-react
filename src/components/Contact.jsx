@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { profile } from '../data'
+import { profile, gmailCompose } from '../data'
 import SectionHeader from './SectionHeader'
 
 function Contact() {
@@ -13,10 +13,13 @@ function Contact() {
     const email = data.get('email')
     const message = data.get('message')
 
-    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`)
-    const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`)
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
-    setStatus('Opening your email app with the message ready to send...')
+    const url = gmailCompose(
+      profile.email,
+      `Portfolio inquiry from ${name}`,
+      `${message}\n\n— ${name} (${email})`,
+    )
+    window.open(url, '_blank', 'noopener,noreferrer')
+    setStatus('Gmail opened in a new tab — review the message and press Send.')
   }
 
   return (
@@ -28,7 +31,12 @@ function Contact() {
             Have a project in mind, or just want to say hello? My inbox is always
             open — I usually reply within 24 hours.
           </p>
-          <a href={`mailto:${profile.email}`} className="contact-detail">
+          <a
+            href={gmailCompose(profile.email)}
+            target="_blank"
+            rel="noreferrer"
+            className="contact-detail"
+          >
             <span aria-hidden="true">📧</span> {profile.email}
           </a>
           <a href={`tel:${profile.phone}`} className="contact-detail">
