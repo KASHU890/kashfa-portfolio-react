@@ -42,7 +42,7 @@ content.push(textLine('Web Developer', 14, 'F1', 60, y))
 y -= 24
 content.push(
   textLine(
-    'kashfa.ahsaan@gmail.com  |  +92 309 4642386  |  github.com/kashfaahsaan  |  Pakistan',
+    'kashfa.ahsaan@gmail.com  |  +92 309 4642386  |  github.com/KASHU890  |  Pakistan',
     9,
     'F2',
     60,
@@ -55,7 +55,7 @@ content.push(sectionTitle('PROFILE'))
 y -= 16
 content.push(
   textLineWrap(
-    'Passionate web developer who builds clean, responsive, and user-friendly websites. Strong eye for detail, clean code, and modern design that helps businesses grow online.',
+    'Passionate fresher web developer who builds clean, responsive websites, full-stack capstone projects, and browser-based games. Focused on modern HTML, CSS, and JavaScript, and always learning new ways to craft better user experiences.',
     10.5,
     'F2',
     60,
@@ -88,7 +88,7 @@ content.push(textLine('2024 - Present', 9.5, 'F2', 380, y))
 y -= 14
 content.push(
   textLineWrap(
-    'Building responsive websites and web apps for small businesses - landing pages, dashboards, and personal projects.',
+    'Building responsive websites and web apps - e-commerce, travel recommendation, and browser-based games - while growing a portfolio of real-world projects.',
     10,
     'F2',
     60,
@@ -124,9 +124,9 @@ y -= 30
 
 content.push(sectionTitle('PROJECTS'))
 y -= 16
-content.push(textLine('E-Commerce Website | Weather Dashboard | Task Manager App', 10, 'F2', 60, y))
+content.push(textLine('E-Plant Shopping | Travel Recommendation | Fullstack Capstone', 10, 'F2', 60, y))
 y -= 14
-content.push(textLine('Personal Blog | Recipe Finder | Portfolio Template', 10, 'F2', 60, y))
+content.push(textLine('Vendors | Candy Crush | Space Jumper Game', 10, 'F2', 60, y))
 
 const stream = content.join('')
 

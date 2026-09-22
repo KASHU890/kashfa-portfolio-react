@@ -11,8 +11,8 @@ export const profile = {
   socials: [
     {
       label: 'GitHub',
-      handle: 'github.com/kashfaahsaan',
-      url: 'https://github.com/',
+      handle: 'github.com/KASHU890',
+      url: 'https://github.com/KASHU890',
     },
     {
       label: 'LinkedIn',
@@ -63,58 +63,58 @@ export const skills = {
 
 const projectsList = [
   {
-    title: 'E-Commerce Website',
+    title: 'E-Plant Shopping',
     description:
-      'A fully responsive online store with product browsing, cart, checkout flow, and a clean admin-style dashboard.',
-    tech: ['React', 'CSS3', 'JavaScript'],
+      'An online plant store with product listings, shopping flow, and a clean, plant-themed responsive design.',
+    tech: ['JavaScript', 'CSS3', 'HTML5'],
     link: '#',
-    github: '#',
-    icon: '🛒',
+    github: 'https://github.com/KASHU890/e-plantShopping',
+    icon: '🪴',
   },
   {
-    title: 'Weather Dashboard',
+    title: 'Travel Recommendation',
     description:
-      'A live weather app that fetches real-time data by city, with an elegant forecast layout and dark/light themes.',
-    tech: ['JavaScript', 'REST API', 'HTML5'],
-    link: '#',
-    github: '#',
-    icon: '⛅',
-  },
-  {
-    title: 'Task Manager App',
-    description:
-      'A productivity tool with drag-and-drop boards, due dates, filters, and local storage persistence.',
-    tech: ['React', 'Tailwind CSS', 'Vite'],
-    link: '#',
-    github: '#',
-    icon: '✅',
-  },
-  {
-    title: 'Personal Blog',
-    description:
-      'A fast, minimal blog with clean typography, reading-time estimates, and a fully responsive layout.',
+      'A travel recommendation web app that suggests destinations and presents them in a polished, responsive layout.',
     tech: ['HTML5', 'CSS3', 'JavaScript'],
     link: '#',
-    github: '#',
-    icon: '📝',
+    github: 'https://github.com/KASHU890/travel-recommendation',
+    icon: '✈️',
   },
   {
-    title: 'Recipe Finder',
+    title: 'Fullstack Capstone Project',
     description:
-      'Search and filter recipes by ingredient with instant results and a beautiful card-based interface.',
-    tech: ['JavaScript', 'REST API', 'CSS3'],
+      'A complete full-stack capstone project built end-to-end, covering frontend, backend, and API integration.',
+    tech: ['JavaScript', 'Full-Stack'],
     link: '#',
-    github: '#',
-    icon: '🍳',
+    github: 'https://github.com/KASHU890/fullstack-capstone-project',
+    icon: '🎓',
   },
   {
-    title: 'Portfolio Template',
+    title: 'Vendors',
     description:
-      'A reusable, configurable portfolio starter kit built for developers who want a professional site fast.',
-    tech: ['React', 'Vite', 'CSS3'],
+      'A vendor-focused web app for browsing and managing vendor listings with a straightforward, usable interface.',
+    tech: ['JavaScript', 'HTML5'],
     link: '#',
-    github: '#',
-    icon: '🧩',
+    github: 'https://github.com/KASHU890/vendors',
+    icon: '🏪',
+  },
+  {
+    title: 'Candy Crush',
+    description:
+      'A browser-based Candy Crush-style matching game built with JavaScript for smooth, interactive gameplay.',
+    tech: ['JavaScript', 'CSS3'],
+    link: '#',
+    github: 'https://github.com/KASHU890/candy-crush',
+    icon: '🍬',
+  },
+  {
+    title: 'Space Jumper Game',
+    description:
+      'A fun jumping arcade game with responsive controls and colorful space-themed visuals.',
+    tech: ['HTML5', 'CSS3'],
+    link: '#',
+    github: 'https://github.com/KASHU890/space-jumper-game',
+    icon: '🚀',
   },
 ]
 
@@ -127,7 +127,7 @@ export const experience = [
     title: 'Web Developer (Fresher)',
     org: 'Freelance & Personal Projects',
     description:
-      'Building responsive websites and web apps — landing pages, dashboards, and small business sites — while growing a portfolio of real-world projects.',
+      'Building responsive websites, full-stack projects, and browser-based games — an e-commerce store, a travel recommendation app, matching and arcade games — while growing a portfolio of real-world work.',
   },
   {
     type: 'work',
