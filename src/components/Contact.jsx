@@ -18,8 +18,21 @@ function Contact() {
       `Portfolio inquiry from ${name}`,
       `${message}\n\n— ${name} (${email})`,
     )
-    window.open(url, '_blank', 'noopener,noreferrer')
-    setStatus('Gmail opened in a new tab — review the message and press Send.')
+    const win = window.open(url, '_blank', 'noopener,noreferrer')
+    if (!win) {
+      window.location.href = url
+    }
+    setStatus('Gmail khul raha hai — message review karke Send dabayen.')
+  }
+
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(profile.email)
+      setStatus('Email copied to clipboard!')
+    } catch {
+      setStatus(profile.email)
+    }
+    setTimeout(() => setStatus(''), 3500)
   }
 
   return (
@@ -33,12 +46,14 @@ function Contact() {
           </p>
           <a
             href={gmailCompose(profile.email)}
-            target="_blank"
-            rel="noreferrer"
             className="contact-detail"
+            title="Open Gmail compose"
           >
             <span aria-hidden="true">📧</span> {profile.email}
           </a>
+          <button type="button" className="copy-btn" onClick={copyEmail}>
+            📋 Copy email
+          </button>
           <a href={`tel:${profile.phone}`} className="contact-detail">
             <span aria-hidden="true">📞</span> {profile.phone}
           </a>

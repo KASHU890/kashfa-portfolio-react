@@ -626,6 +626,25 @@ img {
   color: var(--accent-2);
 }
 
+.copy-btn {
+  margin-top: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--heading);
+}
+
 .contact-socials {
   display: flex;
   flex-wrap: wrap;
