@@ -20,9 +20,11 @@ function ProjectCard({ project }) {
         <a href={project.github} target="_blank" rel="noreferrer" className="link">
           GitHub <span aria-hidden="true">↗</span>
         </a>
-        <a href={project.link} target="_blank" rel="noreferrer" className="link">
-          Live Demo <span aria-hidden="true">↗</span>
-        </a>
+        {project.link !== project.github && (
+          <a href={project.link} target="_blank" rel="noreferrer" className="link">
+            Live Demo <span aria-hidden="true">↗</span>
+          </a>
+        )}
       </div>
     </article>
   )

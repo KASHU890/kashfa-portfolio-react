@@ -74,7 +74,7 @@ const projectsList = [
     description:
       'An online plant store with product listings, shopping flow, and a clean, plant-themed responsive design.',
     tech: ['JavaScript', 'CSS3', 'HTML5'],
-    link: '#',
+    link: 'https://github.com/KASHU890/e-plantShopping',
     github: 'https://github.com/KASHU890/e-plantShopping',
     icon: '🪴',
   },
@@ -83,7 +83,7 @@ const projectsList = [
     description:
       'A travel recommendation web app that suggests destinations and presents them in a polished, responsive layout.',
     tech: ['HTML5', 'CSS3', 'JavaScript'],
-    link: '#',
+    link: 'https://kashu890.github.io/travel-recommendation/',
     github: 'https://github.com/KASHU890/travel-recommendation',
     icon: '✈️',
   },
@@ -92,7 +92,7 @@ const projectsList = [
     description:
       'A complete full-stack capstone project built end-to-end, covering frontend, backend, and API integration.',
     tech: ['JavaScript', 'Full-Stack'],
-    link: '#',
+    link: 'https://github.com/KASHU890/fullstack-capstone-project',
     github: 'https://github.com/KASHU890/fullstack-capstone-project',
     icon: '🎓',
   },
@@ -101,7 +101,7 @@ const projectsList = [
     description:
       'A vendor-focused web app for browsing and managing vendor listings with a straightforward, usable interface.',
     tech: ['JavaScript', 'HTML5'],
-    link: '#',
+    link: 'https://kashu890.github.io/vendors/',
     github: 'https://github.com/KASHU890/vendors',
     icon: '🏪',
   },
@@ -110,7 +110,7 @@ const projectsList = [
     description:
       'A browser-based Candy Crush-style matching game built with JavaScript for smooth, interactive gameplay.',
     tech: ['JavaScript', 'CSS3'],
-    link: '#',
+    link: 'https://kashu890.github.io/candy-crush/',
     github: 'https://github.com/KASHU890/candy-crush',
     icon: '🍬',
   },
@@ -119,7 +119,7 @@ const projectsList = [
     description:
       'A fun jumping arcade game with responsive controls and colorful space-themed visuals.',
     tech: ['HTML5', 'CSS3'],
-    link: '#',
+    link: 'https://kashu890.github.io/space-jumper-game/',
     github: 'https://github.com/KASHU890/space-jumper-game',
     icon: '🚀',
   },
