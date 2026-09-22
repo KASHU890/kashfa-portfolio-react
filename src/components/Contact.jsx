@@ -4,25 +4,46 @@ import SectionHeader from './SectionHeader'
 
 function Contact() {
   const [status, setStatus] = useState('')
+  const [sending, setSending] = useState(false)
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    const form = event.currentTarget
-    const data = new FormData(form)
-    const name = data.get('name')
-    const email = data.get('email')
-    const message = data.get('message')
-
-    const url = gmailCompose(
-      profile.email,
-      `Portfolio inquiry from ${name}`,
-      `${message}\n\n— ${name} (${email})`,
-    )
-    const win = window.open(url, '_blank', 'noopener,noreferrer')
-    if (!win) {
-      window.location.href = url
+    const data = new FormData(event.currentTarget)
+    const payload = {
+      _subject: `Portfolio inquiry from ${data.get('name')}`,
+      name: data.get('name'),
+      email: data.get('email'),
+      message: data.get('message'),
     }
-    setStatus('Gmail khul raha hai — message review karke Send dabayen.')
+
+    setSending(true)
+    setStatus('Message bheja ja raha hai...')
+    try {
+      const res = await fetch(
+        'https://formsubmit.co/ajax/kashfa.ahsaan@gmail.com',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(payload),
+        },
+      )
+      const result = await res.json()
+      if (res.ok && result.success) {
+        setStatus('✅ Message parh gaya! Aapke inbox mein aa gaya. Reply jald mil jayega.')
+        event.currentTarget.reset()
+      } else {
+        setStatus(
+          '⚠️ Pehli baar activation chahiye — Gmail inbox mein FormSubmit ka email par gaye, us mein Activate par click karein, phir dobara submit karein.',
+        )
+      }
+    } catch {
+      setStatus('❌ FormSubmit reach nahi hua. Internet check karein.')
+    } finally {
+      setSending(false)
+    }
   }
 
   async function copyEmail() {
@@ -92,8 +113,9 @@ function Contact() {
               placeholder="Tell me about your project..."
             ></textarea>
           </label>
-          <button type="submit" className="btn btn-primary">
-            Send Message
+          <input type="text" name="_honey" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
+          <button type="submit" className="btn btn-primary" disabled={sending}>
+            {sending ? 'Sending...' : 'Send Message'}
           </button>
           {status && <p className="form-status">{status}</p>}
         </form>
