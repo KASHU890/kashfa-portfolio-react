@@ -29,8 +29,8 @@ function textLineWrap(content, size, font, x, y, maxWidth, leading) {
   return out
 }
 
-function sectionTitle(t) {
-  return textLine(t, 12, 'F1', 60, 0) + textLine('', 1, 'F1', 60, 0)
+function sectionTitle(t, x, y) {
+  return textLine(t, 12, 'F1', x, y)
 }
 
 let y = 760
@@ -51,8 +51,8 @@ content.push(
 )
 y -= 26
 
-content.push(sectionTitle('PROFILE'))
-y -= 16
+content.push(sectionTitle('PROFILE', 60, y))
+y -= 22
 content.push(
   textLineWrap(
     'Passionate fresher web developer who builds clean, responsive websites, full-stack capstone projects, and browser-based games. Focused on modern HTML, CSS, and JavaScript, and always learning new ways to craft better user experiences.',
@@ -64,12 +64,12 @@ content.push(
     15,
   ),
 )
-y -= 66
+y -= 76
 
-content.push(sectionTitle('SKILLS'))
-y -= 16
+content.push(sectionTitle('SKILLS', 60, y))
+y -= 22
 content.push(
-  textLine(
+  textLineWrap(
     'HTML5 | CSS3 | JavaScript (ES6+) | React | Tailwind CSS | Responsive Design | Git & GitHub | UI/UX Basics',
     10,
     'F2',
@@ -79,10 +79,10 @@ content.push(
     14,
   ),
 )
-y -= 24
+y -= 30
 
-content.push(sectionTitle('EXPERIENCE'))
-y -= 16
+content.push(sectionTitle('EXPERIENCE', 60, y))
+y -= 22
 content.push(textLine('Web Developer (Fresher) - Freelance & Personal Projects', 11, 'F1', 60, y))
 content.push(textLine('2024 - Present', 9.5, 'F2', 380, y))
 y -= 14
@@ -114,19 +114,55 @@ content.push(
 )
 y -= 30
 
-content.push(sectionTitle('EDUCATION'))
-y -= 16
+content.push(sectionTitle('EDUCATION', 60, y))
+y -= 22
 content.push(textLine('BS Computer Science - University', 11, 'F1', 60, y))
 content.push(textLine('2020 - 2024', 9.5, 'F2', 380, y))
 y -= 14
 content.push(textLineWrap('Focused on web technologies and human-computer interaction.', 10, 'F2', 60, y, W - 120, 14))
 y -= 30
 
-content.push(sectionTitle('PROJECTS'))
-y -= 16
-content.push(textLine('E-Plant Shopping | Travel Recommendation | Fullstack Capstone', 10, 'F2', 60, y))
-y -= 14
-content.push(textLine('Vendors | Candy Crush | Space Jumper Game', 10, 'F2', 60, y))
+content.push(sectionTitle('PROJECTS', 60, y))
+y -= 22
+
+const projectLines = [
+  {
+    name: 'E-Plant Shopping',
+    desc: 'Online plant store web app',
+    url: 'code: github.com/KASHU890/e-plantShopping',
+  },
+  {
+    name: 'Travel Recommendation',
+    desc: 'Destination suggestion web app',
+    url: 'live: kashu890.github.io/travel-recommendation',
+  },
+  {
+    name: 'Fullstack Capstone',
+    desc: 'End-to-end full-stack project with API',
+    url: 'code: github.com/KASHU890/fullstack-capstone-project',
+  },
+  {
+    name: 'Vendors',
+    desc: 'Vendor listing web app',
+    url: 'live: kashu890.github.io/vendors',
+  },
+  {
+    name: 'Candy Crush',
+    desc: 'Match-3 browser game',
+    url: 'live: kashu890.github.io/candy-crush',
+  },
+  {
+    name: 'Space Jumper Game',
+    desc: 'Arcade jumping game',
+    url: 'live: kashu890.github.io/space-jumper-game',
+  },
+]
+
+for (const project of projectLines) {
+  content.push(textLine(`${project.name} - ${project.desc}`, 10, 'F2', 60, y))
+  content.push(textLine(project.url, 8.5, 'F2', 60, y - 12))
+  y -= 30
+}
 
 const stream = content.join('')
 
