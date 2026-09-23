@@ -9,7 +9,7 @@ function Resume() {
         <div className="resume-toolbar">
           <div>
             <strong>{profile.name}</strong>
-            <span className="resume-sub">Web Developer • Fresher</span>
+            <span className="resume-sub">Full Stack Web Developer • Fresher</span>
           </div>
           <a href={profile.resumeUrl} className="btn btn-primary btn-sm" download>
             Download PDF

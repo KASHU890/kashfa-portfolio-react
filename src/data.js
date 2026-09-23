@@ -8,9 +8,9 @@ export function gmailCompose(to, subject = '', body = '') {
 export const profile = {
   name: 'Kashfa Ahsaan',
   initials: 'KA',
-  role: 'Web Developer',
+  role: 'Full Stack Web Developer',
   tagline:
-    'I build clean, modern, and user-friendly websites that help businesses grow and leave a lasting impression.',
+    'I build complete web applications — front-end to back-end — with clean, modern, and user-friendly design that helps businesses grow and leaves a lasting impression.',
   location: 'Pakistan',
   email: 'kashfa.ahsaan@gmail.com',
   phone: '+92 309 4642386',
@@ -36,7 +36,7 @@ export const profile = {
 
 export const about = {
   bio: [
-    'Hello! I am Kashfa Ahsaan, a passionate web developer who loves turning ideas into fast, accessible, and beautiful websites. I focus on writing clean code and designing experiences that feel effortless.',
+    'Hello! I am Kashfa Ahsaan, a full-stack web developer who loves turning ideas into fast, accessible, and beautiful web applications. I build both the front-end users see and the back-end that powers it — APIs, databases, and everything in between.',
     'I enjoy collaborating with teams, learning new technologies, and solving real-world problems through the web. Every project I take on is an opportunity to craft something the user will genuinely enjoy using.',
   ],
   stats: [
@@ -53,10 +53,13 @@ export const skills = {
     'CSS3',
     'JavaScript (ES6+)',
     'React',
+    'Node.js',
+    'Express',
+    'MongoDB',
+    'REST APIs',
     'Responsive Design',
     'Tailwind CSS',
     'Git & GitHub',
-    'UI/UX Basics',
   ],
   soft: [
     'Problem Solving',
@@ -131,7 +134,7 @@ export const experience = [
   {
     type: 'work',
     period: '2024 — Present',
-    title: 'Web Developer (Fresher)',
+    title: 'Full Stack Web Developer (Fresher)',
     org: 'Freelance & Personal Projects',
     description:
       'Building responsive websites, full-stack projects, and browser-based games — an e-commerce store, a travel recommendation app, matching and arcade games — while growing a portfolio of real-world work.',

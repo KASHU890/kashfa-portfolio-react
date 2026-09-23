@@ -7,161 +7,168 @@ const outPath = resolve(__dirname, '..', 'public', 'resume.pdf')
 
 const W = 595
 const H = 842
+const MARGIN = 60
+const AVAIL = W - MARGIN * 2
 
 function textLine(content, size, font, x, y) {
   return `BT /${font} ${size} Tf ${x} ${y} Td (${content}) Tj ET\n`
 }
 
-function textLineWrap(content, size, font, x, y, maxWidth, leading) {
-  if (!content) return ''
-  const charsPerLine = Math.floor(maxWidth / size)
-  let out = ''
-  let remaining = content
-  let lineY = y
-  while (remaining.length > 0) {
-    let chunk = remaining.slice(0, charsPerLine)
-    const idx = chunk.lastIndexOf(' ')
-    if (idx > 0 && chunk.length === charsPerLine) chunk = chunk.slice(0, idx)
-    out += textLine(chunk, size, font, x, lineY)
-    remaining = remaining.slice(chunk.length).replace(/^\s+/, '')
-    lineY -= leading
+function wrap(content, size, maxW) {
+  const perChar = size * 0.5
+  const cpl = Math.max(1, Math.floor(maxW / perChar))
+  const lines = []
+  const words = content.split(/\s+/)
+  let line = ''
+  for (const word of words) {
+    if ((line + ' ' + word).trim().length <= cpl) {
+      line = (line + ' ' + word).trim()
+    } else {
+      if (line) lines.push(line)
+      line = word.length > cpl ? word.slice(0, cpl) : word
+    }
   }
-  return out
+  if (line) lines.push(line)
+  return lines
 }
 
-function sectionTitle(t, x, y) {
-  return textLine(t, 12, 'F1', x, y)
+function block(content, size, font, x, y, leading) {
+  const lines = wrap(content, size, AVAIL)
+  return {
+    y: y - (lines.length - 1) * leading,
+    lines: lines.map((line, i) => textLine(line, size, font, x, y - i * leading)).join(''),
+  }
+}
+
+// A "row" = bold title with optional right-aligned light date.
+// If title + date don't fit on one line, the date drops to its own line.
+function row(title, date) {
+  const dateSize = 9.5
+  const dateW = date ? date.length * dateSize * 0.5 + 8 : 0
+  const titleW = title.length * 11 * 0.5
+  let yCursor = y
+  if (date && titleW + 16 + dateW <= AVAIL) {
+    y -= 16
+    return (
+      textLine(title, 11, 'F1', MARGIN, yCursor) +
+      textLine(date, dateSize, 'F2', W - MARGIN - dateW, yCursor)
+    )
+  }
+  const titleLines = wrap(title, 11, AVAIL)
+  y -= 16 * titleLines.length
+  return (
+    titleLines.map((line, i) => textLine(line, 11, 'F1', MARGIN, yCursor - i * 16)).join('') +
+    (date ? textLine(date, dateSize, 'F2', MARGIN, yCursor - titleLines.length * 16 + 2) : '')
+  )
 }
 
 let y = 760
 const content = []
 
-content.push(textLine('KASHFA AHSAAN', 26, 'F1', 60, y))
-y -= 30
-content.push(textLine('Web Developer', 14, 'F1', 60, y))
+content.push(textLine('KASHFA AHSAAN', 26, 'F1', MARGIN, y))
+y -= 31
+content.push(textLine('Full Stack Web Developer', 14, 'F1', MARGIN, y))
 y -= 24
 content.push(
   textLine(
     'kashfa.ahsaan@gmail.com  |  +92 309 4642386  |  github.com/KASHU890  |  Pakistan',
     9,
     'F2',
-    60,
+    MARGIN,
     y,
   ),
 )
-y -= 26
+y -= 27
 
-content.push(sectionTitle('PROFILE', 60, y))
-y -= 22
-content.push(
-  textLineWrap(
-    'Passionate fresher web developer who builds clean, responsive websites, full-stack capstone projects, and browser-based games. Focused on modern HTML, CSS, and JavaScript, and always learning new ways to craft better user experiences.',
-    10.5,
-    'F2',
-    60,
-    y,
-    W - 120,
-    15,
-  ),
+// PROFILE
+content.push(textLine('PROFILE', 12, 'F1', MARGIN, y))
+y -= 20
+const profileBlock = block(
+  'Passionate fresher full-stack developer building complete web apps from scratch — front-end with React, back-end with Node.js and Express, MongoDB databases, and REST APIs — plus responsive e-commerce stores, travel apps, and browser games.',
+  10.5,
+  'F2',
+  MARGIN,
+  y,
+  15,
 )
-y -= 76
+content.push(profileBlock.lines)
+y = profileBlock.y - 20
 
-content.push(sectionTitle('SKILLS', 60, y))
-y -= 22
-content.push(
-  textLineWrap(
-    'HTML5 | CSS3 | JavaScript (ES6+) | React | Tailwind CSS | Responsive Design | Git & GitHub | UI/UX Basics',
-    10,
-    'F2',
-    60,
-    y,
-    W - 120,
-    14,
-  ),
+// SKILLS
+content.push(textLine('SKILLS', 12, 'F1', MARGIN, y))
+y -= 20
+const skillsBlock = block(
+  'HTML5 | CSS3 | JavaScript (ES6+) | React | Node.js | Express | MongoDB | REST APIs | Responsive Design | Tailwind CSS | Git & GitHub',
+  10,
+  'F2',
+  MARGIN,
+  y,
+  14,
 )
-y -= 30
+content.push(skillsBlock.lines)
+y = skillsBlock.y - 20
 
-content.push(sectionTitle('EXPERIENCE', 60, y))
-y -= 22
-content.push(textLine('Web Developer (Fresher) - Freelance & Personal Projects', 11, 'F1', 60, y))
-content.push(textLine('2024 - Present', 9.5, 'F2', 380, y))
-y -= 14
-content.push(
-  textLineWrap(
-    'Building responsive websites and web apps - e-commerce, travel recommendation, and browser-based games - while growing a portfolio of real-world projects.',
-    10,
-    'F2',
-    60,
-    y,
-    W - 120,
-    14,
-  ),
+// EXPERIENCE
+content.push(textLine('EXPERIENCE', 12, 'F1', MARGIN, y))
+y -= 20
+content.push(row('Full Stack Web Developer (Fresher)', '2024 - Present'))
+y -= 2
+const exp1 = block(
+  'Building full-stack web apps end-to-end — e-commerce store, travel recommendation app, and browser-based games — from database and API design to responsive front-end.',
+  10,
+  'F2',
+  MARGIN,
+  y,
+  14,
 )
-y -= 30
-content.push(textLine('Final-Year Project - Web Application', 11, 'F1', 60, y))
-content.push(textLine('2025', 9.5, 'F2', 380, y))
-y -= 14
-content.push(
-  textLineWrap(
-    'Built a complete web app from scratch using clean code, responsive layouts, and modern JavaScript.',
-    10,
-    'F2',
-    60,
-    y,
-    W - 120,
-    14,
-  ),
+content.push(exp1.lines)
+y = exp1.y - 2
+content.push(row('Final-Year Project - Full Stack Web App', '2025'))
+y -= 2
+const exp2 = block(
+  'Developed a complete full-stack web application from scratch using clean code, a REST API, and modern JavaScript.',
+  10,
+  'F2',
+  MARGIN,
+  y,
+  14,
 )
-y -= 30
+content.push(exp2.lines)
+y = exp2.y - 20
 
-content.push(sectionTitle('EDUCATION', 60, y))
-y -= 22
-content.push(textLine('BS Computer Science - University', 11, 'F1', 60, y))
-content.push(textLine('2020 - 2024', 9.5, 'F2', 380, y))
-y -= 14
-content.push(textLineWrap('Focused on web technologies and human-computer interaction.', 10, 'F2', 60, y, W - 120, 14))
-y -= 30
+// EDUCATION
+content.push(textLine('EDUCATION', 12, 'F1', MARGIN, y))
+y -= 20
+content.push(row('BS Computer Science - University', '2020 - 2024'))
+y -= 2
+const eduBlock = block(
+  'Focused on web technologies, databases, and human-computer interaction.',
+  10,
+  'F2',
+  MARGIN,
+  y,
+  14,
+)
+content.push(eduBlock.lines)
+y = eduBlock.y - 20
 
-content.push(sectionTitle('PROJECTS', 60, y))
+// PROJECTS
+content.push(textLine('PROJECTS', 12, 'F1', MARGIN, y))
 y -= 22
 
 const projectLines = [
-  {
-    name: 'E-Plant Shopping',
-    desc: 'Online plant store web app',
-    url: 'live: kashu890.github.io/e-plantShopping',
-  },
-  {
-    name: 'Travel Recommendation',
-    desc: 'Destination suggestion web app',
-    url: 'live: kashu890.github.io/travel-recommendation',
-  },
-  {
-    name: 'Fullstack Capstone',
-    desc: 'End-to-end full-stack project with API',
-    url: 'code: github.com/KASHU890/fullstack-capstone-project',
-  },
-  {
-    name: 'Vendors',
-    desc: 'Vendor listing web app',
-    url: 'live: kashu890.github.io/vendors',
-  },
-  {
-    name: 'Candy Crush',
-    desc: 'Match-3 browser game',
-    url: 'live: kashu890.github.io/candy-crush',
-  },
-  {
-    name: 'Space Jumper Game',
-    desc: 'Arcade jumping game',
-    url: 'live: kashu890.github.io/space-jumper-game',
-  },
+  { name: 'E-Plant Shopping', desc: 'Online plant store web app', url: 'live: kashu890.github.io/e-plantShopping' },
+  { name: 'Travel Recommendation', desc: 'Destination suggestion web app', url: 'live: kashu890.github.io/travel-recommendation' },
+  { name: 'Fullstack Capstone', desc: 'End-to-end full-stack project (Express + MongoDB)', url: 'code: github.com/KASHU890/fullstack-capstone-project' },
+  { name: 'Vendors', desc: 'Vendor listing web app', url: 'live: kashu890.github.io/vendors' },
+  { name: 'Candy Crush', desc: 'Match-3 browser game', url: 'live: kashu890.github.io/candy-crush' },
+  { name: 'Space Jumper Game', desc: 'Arcade jumping game', url: 'live: kashu890.github.io/space-jumper-game' },
 ]
 
 for (const project of projectLines) {
-  content.push(textLine(`${project.name} - ${project.desc}`, 10, 'F2', 60, y))
-  content.push(textLine(project.url, 8.5, 'F2', 60, y - 12))
-  y -= 30
+  const p = block(`${project.name} - ${project.desc}`, 10, 'F2', MARGIN, y, 12)
+  content.push(p.lines + textLine(project.url, 8.5, 'F2', MARGIN, p.y - 14))
+  y = p.y - 14 - 18
 }
 
 const stream = content.join('')
