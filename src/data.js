@@ -14,7 +14,7 @@ export const profile = {
   location: 'Pakistan',
   email: 'kashfa.ahsaan@gmail.com',
   phone: '+92 309 4642386',
-  resumeUrl: '/resume.pdf',
+  resumeUrl: `${import.meta.env.BASE_URL}resume.pdf`,
   socials: [
     {
       label: 'GitHub',
