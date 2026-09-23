@@ -129,7 +129,7 @@ const projectLines = [
   {
     name: 'E-Plant Shopping',
     desc: 'Online plant store web app',
-    url: 'code: github.com/KASHU890/e-plantShopping',
+    url: 'live: kashu890.github.io/e-plantShopping',
   },
   {
     name: 'Travel Recommendation',

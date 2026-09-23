@@ -74,7 +74,7 @@ const projectsList = [
     description:
       'An online plant store with product listings, shopping flow, and a clean, plant-themed responsive design.',
     tech: ['JavaScript', 'CSS3', 'HTML5'],
-    link: 'https://github.com/KASHU890/e-plantShopping',
+    link: 'https://kashu890.github.io/e-plantShopping/',
     github: 'https://github.com/KASHU890/e-plantShopping',
     icon: '🪴',
   },
