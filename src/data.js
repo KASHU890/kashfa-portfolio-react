@@ -149,11 +149,11 @@ export const experience = [
   },
   {
     type: 'education',
-    period: '2020 — 2024',
+    period: '2022 — 2026',
     title: 'BS Computer Science',
     org: 'University',
     description:
-      'Graduated with a focus on web technologies, data structures, and human-computer interaction.',
+      'Pursuing a BS in Computer Science with a focus on web technologies, data structures, and human-computer interaction.',
   },
   {
     type: 'education',

@@ -10,7 +10,16 @@ const H = 842
 const MARGIN = 60
 const AVAIL = W - MARGIN * 2
 
-function textLine(content, size, font, x, y) {
+// Every drawn text line is tracked so we can detect any overlap before writing the PDF.
+const boxes = []
+function drawText(content, size, font, x, y) {
+  const widthFactor = font === 'F1' ? 0.66 : 0.56
+  boxes.push({
+    x0: x,
+    x1: x + content.length * size * widthFactor,
+    yTop: y + size * 0.8,
+    yBot: y - size * 0.2,
+  })
   return `BT /${font} ${size} Tf ${x} ${y} Td (${content}) Tj ET\n`
 }
 
@@ -36,125 +45,108 @@ function block(content, size, font, x, y, leading) {
   const lines = wrap(content, size, AVAIL)
   return {
     y: y - (lines.length - 1) * leading,
-    lines: lines.map((line, i) => textLine(line, size, font, x, y - i * leading)).join(''),
+    lines: lines.map((line, i) => drawText(line, size, font, x, y - i * leading)).join(''),
   }
 }
 
-// A "row" = bold title with optional right-aligned light date.
-// If title + date don't fit on one line, the date drops to its own line.
+function sectionTitle(t) {
+  const out = drawText(t, 12, 'F1', MARGIN, y)
+  y -= 22
+  return out
+}
+
+// A row = bold title line(s) with the date on its own line (right-aligned) right below.
+// Dates never share a line with a title, so text can never overwrite.
 function row(title, date) {
-  const dateSize = 9.5
-  const dateW = date ? date.length * dateSize * 0.5 + 8 : 0
-  const titleW = title.length * 11 * 0.5
-  let yCursor = y
-  if (date && titleW + 16 + dateW <= AVAIL) {
-    y -= 16
-    return (
-      textLine(title, 11, 'F1', MARGIN, yCursor) +
-      textLine(date, dateSize, 'F2', W - MARGIN - dateW, yCursor)
-    )
-  }
   const titleLines = wrap(title, 11, AVAIL)
-  y -= 16 * titleLines.length
-  return (
-    titleLines.map((line, i) => textLine(line, 11, 'F1', MARGIN, yCursor - i * 16)).join('') +
-    (date ? textLine(date, dateSize, 'F2', MARGIN, yCursor - titleLines.length * 16 + 2) : '')
-  )
+  let out = titleLines.map((line, i) => drawText(line, 11, 'F1', MARGIN, y - i * 18)).join('')
+  if (date) {
+    const dateX = W - MARGIN - Math.ceil(date.length * 9.5 * 0.5)
+    out += drawText(date, 9.5, 'F2', dateX, y - titleLines.length * 18 + 4)
+  }
+  y -= titleLines.length * 18 + 12
+  return out
 }
 
 let y = 760
 const content = []
 
-content.push(textLine('KASHFA AHSAAN', 26, 'F1', MARGIN, y))
-y -= 31
-content.push(textLine('Full Stack Web Developer', 14, 'F1', MARGIN, y))
+content.push(drawText('KASHFA AHSAAN', 26, 'F1', MARGIN, y))
+y -= 32
+content.push(drawText('Full Stack Web Developer', 14, 'F1', MARGIN, y))
 y -= 24
 content.push(
-  textLine(
-    'kashfa.ahsaan@gmail.com  |  +92 309 4642386  |  github.com/KASHU890  |  Pakistan',
-    9,
-    'F2',
-    MARGIN,
-    y,
-  ),
+  drawText('kashfa.ahsaan@gmail.com  |  +92 309 4642386  |  github.com/KASHU890  |  Pakistan', 9, 'F2', MARGIN, y),
 )
-y -= 27
+y -= 28
 
 // PROFILE
-content.push(textLine('PROFILE', 12, 'F1', MARGIN, y))
-y -= 20
+content.push(sectionTitle('PROFILE'))
 const profileBlock = block(
   'Passionate fresher full-stack developer building complete web apps from scratch — front-end with React, back-end with Node.js and Express, MongoDB databases, and REST APIs — plus responsive e-commerce stores, travel apps, and browser games.',
   10.5,
   'F2',
   MARGIN,
   y,
-  15,
+  17,
 )
 content.push(profileBlock.lines)
-y = profileBlock.y - 20
+y = profileBlock.y - 22
 
 // SKILLS
-content.push(textLine('SKILLS', 12, 'F1', MARGIN, y))
-y -= 20
+content.push(sectionTitle('SKILLS'))
 const skillsBlock = block(
   'HTML5 | CSS3 | JavaScript (ES6+) | React | Node.js | Express | MongoDB | REST APIs | Responsive Design | Tailwind CSS | Git & GitHub',
   10,
   'F2',
   MARGIN,
   y,
-  14,
+  15,
 )
 content.push(skillsBlock.lines)
-y = skillsBlock.y - 20
+y = skillsBlock.y - 22
 
 // EXPERIENCE
-content.push(textLine('EXPERIENCE', 12, 'F1', MARGIN, y))
-y -= 20
+content.push(sectionTitle('EXPERIENCE'))
 content.push(row('Full Stack Web Developer (Fresher)', '2024 - Present'))
-y -= 2
 const exp1 = block(
   'Building full-stack web apps end-to-end — e-commerce store, travel recommendation app, and browser-based games — from database and API design to responsive front-end.',
   10,
   'F2',
   MARGIN,
   y,
-  14,
+  15,
 )
 content.push(exp1.lines)
-y = exp1.y - 2
+y = exp1.y - 22
 content.push(row('Final-Year Project - Full Stack Web App', '2025'))
-y -= 2
 const exp2 = block(
   'Developed a complete full-stack web application from scratch using clean code, a REST API, and modern JavaScript.',
   10,
   'F2',
   MARGIN,
   y,
-  14,
+  15,
 )
 content.push(exp2.lines)
-y = exp2.y - 20
+y = exp2.y - 22
 
 // EDUCATION
-content.push(textLine('EDUCATION', 12, 'F1', MARGIN, y))
-y -= 20
-content.push(row('BS Computer Science - University', '2020 - 2024'))
-y -= 2
+content.push(sectionTitle('EDUCATION'))
+content.push(row('BS Computer Science - University', '2022 - 2026'))
 const eduBlock = block(
-  'Focused on web technologies, databases, and human-computer interaction.',
+  'Pursuing a BS in Computer Science — focused on web technologies, databases, and human-computer interaction.',
   10,
   'F2',
   MARGIN,
   y,
-  14,
+  15,
 )
 content.push(eduBlock.lines)
-y = eduBlock.y - 20
+y = eduBlock.y - 22
 
 // PROJECTS
-content.push(textLine('PROJECTS', 12, 'F1', MARGIN, y))
-y -= 22
+content.push(sectionTitle('PROJECTS'))
 
 const projectLines = [
   { name: 'E-Plant Shopping', desc: 'Online plant store web app', url: 'live: kashu890.github.io/e-plantShopping' },
@@ -167,9 +159,23 @@ const projectLines = [
 
 for (const project of projectLines) {
   const p = block(`${project.name} - ${project.desc}`, 10, 'F2', MARGIN, y, 12)
-  content.push(p.lines + textLine(project.url, 8.5, 'F2', MARGIN, p.y - 14))
-  y = p.y - 14 - 18
+  content.push(p.lines + drawText(project.url, 8.5, 'F2', MARGIN, p.y - 13))
+  y = p.y - 13 - 18
 }
+
+// ---- Overlap self-check: abort if any two text boxes collide ----
+for (let i = 0; i < boxes.length; i++) {
+  for (let j = i + 1; j < boxes.length; j++) {
+    const a = boxes[i]
+    const b = boxes[j]
+    const hitX = Math.min(a.x1, b.x1) > Math.max(a.x0, b.x0)
+    const hitY = Math.min(a.yTop, b.yTop) > Math.max(a.yBot, b.yBot)
+    if (hitX && hitY) {
+      throw new Error(`Overlap detected between boxes ${i} and ${j}`)
+    }
+  }
+}
+console.log(`No text overlaps found (${boxes.length} text boxes checked).`)
 
 const stream = content.join('')
 
